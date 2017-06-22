@@ -1,4 +1,4 @@
-FROM node:6.9
+FROM node:8.1
 
 # Install Yarn Repo
 RUN curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
