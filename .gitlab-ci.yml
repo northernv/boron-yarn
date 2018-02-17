@@ -1,0 +1,24 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+.build_tmp: &buid_def
+  stage: build
+  script:
+    - sed -e s/NODE_VERSION/$NODE_VERSION/g Dockerfile.template > Dockerfile
+    - docker build -t northernv/node-alpine-yarn:$NODE_VERSION .
+    - docker push northernv/node-alpine-yarn:$NODE_VERSION
+
+build8:
+  <<: *buid_def
+  variables:
+    NODE_VERSION: 8
+
+build9:
+  <<: *buid_def
+  variables:
+    NODE_VERSION: 9
